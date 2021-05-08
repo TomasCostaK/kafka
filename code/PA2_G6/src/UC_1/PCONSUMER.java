@@ -9,6 +9,6 @@ package UC_1;
  *
  * @author tomascosta
  */
-public class P_CONSUMER {
+public class PCONSUMER {
     
 }
