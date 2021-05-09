@@ -1,7 +1,14 @@
+package UC_1;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Scanner;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.io.*;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /*
@@ -14,21 +21,58 @@ import java.util.Scanner;
  * @author tomascosta
  */
 public class PSOURCE {
-    // Here, declare filepath, java socket
-    private static final String filePath = System.getProperty("user.dir") + "/src/Data/sensors.txt";
 
-    public static void main(String args[]) {
+    private static final String filePath = System.getProperty("user.dir") + "/src/Data/sensors.txt";
+    
+    public static void main(String[] args) throws IOException {
         try {
-        //the file to be opened for reading  
+ 
             FileInputStream fis = new FileInputStream(filePath);
-            Scanner sc = new Scanner(fis);   
-            while (sc.hasNextLine()) {
-                System.out.println(sc.nextLine());
-                System.out.println("Sending to Producer"); // Here send on the server conn to producer, usar server do trab1?
+            Scanner sc = new Scanner(fis); 
+            
+            ServerSocket ss = new ServerSocket(7777);
+          
+            while (true) {
+                
+                Socket s = null;
+
+                try {
+                   
+                    s = ss.accept();     // socket object to receive incoming client(producers) requests
+
+                    DataInputStream dis = new DataInputStream(s.getInputStream());
+                    DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+                    
+                    while (true) {
+                        String received = dis.readUTF();
+                        if(received.equals("ready")) { 
+                            if(sc.hasNextLine()) {     // if there are more lines in file, send to a producer
+                                dos.writeUTF(sc.nextLine());
+                                break;
+                            }
+                            else  {
+                                dos.writeUTF("end");      // if there are no more line, send a finish message to close connection
+                                s.close();
+                                break;
+                            }
+                        }
+                    }
+                }
+                catch (Exception e){
+                    try {
+                        s.close();
+                    } catch (IOException ex) {
+                       e.printStackTrace();
+                    }
+                    e.printStackTrace();
+                }
             }
-            sc.close(); 
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    
+       
 }
