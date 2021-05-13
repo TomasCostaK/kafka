@@ -1,0 +1,32 @@
+https://blog.knoldus.com/setting-it-up-kafka-multi-broker-system/
+
+cp config/server.properties config/server-1.properties
+cp config/server.properties config/server-2.properties
+cp config/server.properties config/server-3.properties
+cp config/server.properties config/server-4.properties
+cp config/server.properties config/server-5.properties
+
+
+broker.id=1
+listeners=PLAINTEXT://:9093
+log.dir=/tmp/kafka-logs-1
+...
+
+
+bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 3 --partitions 6 --topic Sensors --config min.insync.replicas=2
+
+
+bin/kafka-server-start.sh config/server.properties
+bin/kafka-server-start.sh config/server-1.properties &
+...
+
+
+bin/kafka-console-consumer.sh --topic Sensors --bootstrap-server localhost:9092
+
+
+
+
+DÚVIDAS:
+- ordem não é mantida com vários producer threads e vários consumer threads também não estão a ler à vez
+- um kafkaProducer por thread ou partilhado (thread safe)?
+- "não duplicados" sem idempotência?

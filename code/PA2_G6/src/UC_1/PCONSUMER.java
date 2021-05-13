@@ -5,6 +5,13 @@
  */
 package UC_1;
 
+import Message.Message;
+import java.time.Duration;
+import java.util.Arrays;
+import java.util.Properties;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
+
 /**
  *
  * @author tomascosta
@@ -13,15 +20,42 @@ public class PCONSUMER extends Thread {
 
     private final int consumerId;
     private GUICONSUMER guiConsumer = new GUICONSUMER();
-
+    private final Properties properties;
+    private static final String topic = "Sensors";
+    private final KafkaConsumer<String, Message> consumer;
+    
     public PCONSUMER(int consumerId, GUICONSUMER guiConsumer) {
         this.consumerId = consumerId;
         this.guiConsumer = guiConsumer;
+        
+        this.properties = new Properties();
+        this.properties.put("bootstrap.servers", "localhost:9092"); // Conection to the kafka cluster
+        this.properties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer"); // Serializer class for key
+        this.properties.put("value.deserializer", "Message.MessageDeserializer"); // Serializer class for value (message)
+        this.properties.put("allow.auto.create.topics", false); // One copy of each message. Records wil not be duplicated.
+        this.properties.put("enable.auto.commit", true);
+        this.properties.put("session.timeout.ms", "30000");
+        this.properties.put("auto.offset.reset", "earliest");
+        this.properties.put("max.poll.records", 10); 
+        this.properties.put("group.id", "0");
+
+        this.consumer = new KafkaConsumer<>(properties);
+        this.consumer.subscribe(Arrays.asList(this.topic));
     }
     
     @Override
     public void run() {
-        
+
+        while (true) {
+            ConsumerRecords<String, Message> records = consumer.poll(Duration.ofMillis(100));
+
+            records.forEach(record -> {
+                Message msg = record.value();
+                guiConsumer.updateTextArea("Consumer " + this.consumerId + " / Consumed from Kafka: " + msg.toString());
+            });
+
+            consumer.commitAsync(); 
+        }
     }
 
     

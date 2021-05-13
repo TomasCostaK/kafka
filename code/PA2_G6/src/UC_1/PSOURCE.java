@@ -6,23 +6,13 @@ import java.util.Scanner;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.*;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
  *
  * @author tomascosta
  */
 public class PSOURCE {
 
-    private static final String filePath = System.getProperty("user.dir") + "/src/Data/sensors.txt";
+    private static final String filePath = System.getProperty("user.dir") + "/src/Data/sensor.txt";
     
     public static void main(String[] args) throws IOException {
         try {

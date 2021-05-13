@@ -14,10 +14,10 @@ public class Main {
     public static void main(String args[]) {
     
         final int NUMBER_PRODUCERS = 1;
-        final int NUMBER_CONSUMERS = 1;
+        final int NUMBER_CONSUMERS = 5;
         
         final PPRODUCER[] producers = new PPRODUCER[NUMBER_PRODUCERS];
-        final PCONSUMER[] consumers = new PCONSUMER[NUMBER_PRODUCERS];
+        final PCONSUMER[] consumers = new PCONSUMER[NUMBER_CONSUMERS];
 
         final GUIPRODUCER guiProducer = new GUIPRODUCER();
         final GUICONSUMER guiConsumer = new GUICONSUMER();
