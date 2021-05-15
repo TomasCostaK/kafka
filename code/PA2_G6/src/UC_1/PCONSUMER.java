@@ -21,7 +21,7 @@ public class PCONSUMER extends Thread {
     private final int consumerId;
     private GUICONSUMER guiConsumer = new GUICONSUMER();
     private final Properties properties;
-    private static final String topic = "Sensors";
+    private static final String topic = "Sensor";
     private final KafkaConsumer<String, Message> consumer;
     
     public PCONSUMER(int consumerId, GUICONSUMER guiConsumer) {

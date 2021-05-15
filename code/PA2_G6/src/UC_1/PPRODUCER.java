@@ -22,7 +22,7 @@ public class PPRODUCER extends Thread {
     private int producerId;
     private GUIPRODUCER guiProducer;
     private Properties properties;
-    private static final String topic = "Sensors";
+    private static final String topic = "Sensor";
     private KafkaProducer<String, Message> producer;
 
     public PPRODUCER (int producerId, GUIPRODUCER guiProducer) {
@@ -69,7 +69,7 @@ public class PPRODUCER extends Thread {
                 guiProducer.updateTextArea("Producer " + this.producerId + " / Received from Source : " + msg.toString());
                  
                 producer.send(new ProducerRecord<>(this.topic, "DATA", msg));  // send to kafka
-                
+                guiProducer.updateTextArea("Producer " + this.producerId + " sent to server : " + msg.toString());
                 
                 
                 if(received.equals("end")) {
