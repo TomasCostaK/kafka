@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UC_1;
+package UC_4;
 
-import UC_2.GUIPRODUCER;
 import Message.Message;
 import java.net.Socket;
 import java.io.*;

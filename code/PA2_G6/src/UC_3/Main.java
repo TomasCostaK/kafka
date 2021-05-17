@@ -3,12 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UC_1;
-
-import UC_2.PCONSUMER;
-import UC_2.GUIPRODUCER;
-import UC_2.GUICONSUMER;
-import UC_2.PPRODUCER;
+package UC_3;
 
 /**
  *

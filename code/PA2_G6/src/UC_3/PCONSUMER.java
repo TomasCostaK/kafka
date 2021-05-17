@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UC_1;
+package UC_3;
 
-import UC_2.GUICONSUMER;
 import Message.Message;
 import java.time.Duration;
 import java.util.Arrays;
