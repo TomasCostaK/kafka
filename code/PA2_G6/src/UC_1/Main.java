@@ -5,10 +5,10 @@
  */
 package UC_1;
 
-import UC_2.PCONSUMER;
-import UC_2.GUIPRODUCER;
-import UC_2.GUICONSUMER;
-import UC_2.PPRODUCER;
+import UC_4.PCONSUMER;
+import UC_4.GUIPRODUCER;
+import UC_4.GUICONSUMER;
+import UC_4.PPRODUCER;
 
 /**
  *

@@ -5,6 +5,7 @@
  */
 package UC_3;
 
+import UC_4.GUIPRODUCER;
 import Message.Message;
 import java.net.Socket;
 import java.io.*;
@@ -68,7 +69,7 @@ public class PPRODUCER extends Thread {
                 Message msg = new Message(msgArgs[0], Double.parseDouble(msgArgs[1]), Integer.parseInt(msgArgs[2]));
                 guiProducer.updateTextArea("Producer " + this.producerId + " / Received from Source : " + msg.toString());
                  
-                producer.send(new ProducerRecord<>(this.topic, "DATA", msg));  // send to kafka
+                producer.send(new ProducerRecord<>(this.topic, Integer.parseInt(msgArgs[0]),msgArgs[0], msg));  // send to kafka
                 guiProducer.updateTextArea("Producer " + this.producerId + " sent to server : " + msg.toString());
                 
                 

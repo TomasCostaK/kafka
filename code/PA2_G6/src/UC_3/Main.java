@@ -5,16 +5,21 @@
  */
 package UC_3;
 
+import UC_4.PPRODUCER;
+import UC_4.GUICONSUMER;
+import UC_4.GUIPRODUCER;
+import UC_4.PCONSUMER;
+
 /**
  *
  * @author alina
  */
 public class Main {
     
-    public static void main(String args[]) {
+    public static void main(String args[]) throws InterruptedException {
     
         final int NUMBER_PRODUCERS = 1;
-        final int NUMBER_CONSUMERS = 2;
+        final int NUMBER_CONSUMERS = 5;
         
         final PPRODUCER[] producers = new PPRODUCER[NUMBER_PRODUCERS];
         final PCONSUMER[] consumers = new PCONSUMER[NUMBER_CONSUMERS];
@@ -34,7 +39,6 @@ public class Main {
 
                 consumers[i] = new PCONSUMER(i, guiConsumer);
                 consumers[i].start();
-
         }        
         
         

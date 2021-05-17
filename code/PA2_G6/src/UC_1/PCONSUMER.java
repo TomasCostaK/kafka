@@ -5,7 +5,7 @@
  */
 package UC_1;
 
-import UC_2.GUICONSUMER;
+import UC_4.GUICONSUMER;
 import Message.Message;
 import java.time.Duration;
 import java.util.Arrays;

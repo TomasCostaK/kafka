@@ -5,6 +5,7 @@
  */
 package UC_2;
 
+import UC_4.GUIPRODUCER;
 import Message.Message;
 import java.net.Socket;
 import java.io.*;
