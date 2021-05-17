@@ -37,7 +37,7 @@ public class PCONSUMER extends Thread {
         this.properties.put("session.timeout.ms", "30000");
         this.properties.put("auto.offset.reset", "latest");
         this.properties.put("max.poll.records", 10); 
-        this.properties.put("group.id", "0");
+        this.properties.put("group.id", String.valueOf(consumerId));
 
         this.consumer = new KafkaConsumer<>(properties);
         this.consumer.subscribe(Arrays.asList(this.topic));
