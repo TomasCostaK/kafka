@@ -11,10 +11,10 @@ package UC_2;
  */
 public class Main {
     
-    public static void main(String args[]) {
+    public static void main(String args[]) throws InterruptedException {
     
         final int NUMBER_PRODUCERS = 1;
-        final int NUMBER_CONSUMERS = 2;
+        final int NUMBER_CONSUMERS = 5;
         
         final PPRODUCER[] producers = new PPRODUCER[NUMBER_PRODUCERS];
         final PCONSUMER[] consumers = new PCONSUMER[NUMBER_CONSUMERS];
@@ -34,7 +34,6 @@ public class Main {
 
                 consumers[i] = new PCONSUMER(i, guiConsumer);
                 consumers[i].start();
-
         }        
         
         
