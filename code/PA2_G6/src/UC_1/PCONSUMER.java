@@ -5,7 +5,6 @@
  */
 package UC_1;
 
-import UC_4.GUICONSUMER;
 import Message.Message;
 import java.time.Duration;
 import java.util.Arrays;
@@ -20,14 +19,14 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 public class PCONSUMER extends Thread {
 
     private final int consumerId;
-    private GUICONSUMER guiConsumer = new GUICONSUMER();
+    private final GUICONSUMER guiConsumer;
     private final Properties properties;
     private static final String topic = "Sensor";
     private final KafkaConsumer<String, Message> consumer;
     
-    public PCONSUMER(int consumerId, GUICONSUMER guiConsumer) {
+    public PCONSUMER(int consumerId) {
         this.consumerId = consumerId;
-        this.guiConsumer = guiConsumer;
+        this.guiConsumer = new GUICONSUMER();
         
         this.properties = new Properties();
         this.properties.put("bootstrap.servers", "localhost:9092"); // Conection to the kafka cluster
@@ -46,16 +45,20 @@ public class PCONSUMER extends Thread {
     
     @Override
     public void run() {
+        
+        this.guiConsumer.setNewLocation(this.consumerId);
+        this.guiConsumer.setVisible(true);
+        this.guiConsumer.updateTitleArea(Integer.toString(this.consumerId));
 
         while (true) {
-            ConsumerRecords<String, Message> records = consumer.poll(Duration.ofMillis(100));
+            ConsumerRecords<String, Message> records = this.consumer.poll(Duration.ofMillis(100));
 
             records.forEach(record -> {
                 Message msg = record.value();
-                guiConsumer.updateTextArea("Consumer " + this.consumerId + " / Consumed from Kafka: " + msg.toString());
+                this.guiConsumer.updateTextArea("Consumed from Kafka: " + msg.toString());
             });
 
-            consumer.commitAsync(); 
+            this.consumer.commitAsync(); 
         }
     }
 

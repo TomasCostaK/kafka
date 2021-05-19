@@ -10,11 +10,12 @@ import java.io.*;
  *
  * @author tomascosta
  */
-public class PSOURCE {
+public class PSOURCE extends Thread {
 
     private static final String filePath = System.getProperty("user.dir") + "/src/Data/sensor.txt";
     
-    public static void main(String[] args) throws IOException {
+    @Override
+    public void run() {
         try {
  
             FileInputStream fis = new FileInputStream(filePath);

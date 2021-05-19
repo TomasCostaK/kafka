@@ -5,6 +5,8 @@
  */
 package UC_1;
 
+import java.awt.Dimension;
+
 /**
  *
  * @author alina
@@ -29,7 +31,7 @@ public class GUIPRODUCER extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        producersTitle = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         textAreaP = new javax.swing.JTextArea();
 
@@ -48,9 +50,9 @@ public class GUIPRODUCER extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(247, 249, 250));
 
-        jLabel1.setFont(new java.awt.Font("Ubuntu Condensed", 3, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(90, 121, 225));
-        jLabel1.setText("Producers GUI");
+        producersTitle.setFont(new java.awt.Font("Ubuntu Condensed", 3, 24)); // NOI18N
+        producersTitle.setForeground(new java.awt.Color(90, 121, 225));
+        producersTitle.setText("Producers GUI");
 
         textAreaP.setBackground(new java.awt.Color(245, 251, 254));
         textAreaP.setColumns(20);
@@ -64,9 +66,9 @@ public class GUIPRODUCER extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(producersTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -74,9 +76,9 @@ public class GUIPRODUCER extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(producersTitle)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -86,8 +88,8 @@ public class GUIPRODUCER extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,12 +141,22 @@ public class GUIPRODUCER extends javax.swing.JFrame {
         textAreaP.append(text + "\n");
         textAreaP.setCaretPosition(textAreaP.getText().length());
     }
-
+    
+    public void updateTitleArea(String idProducer) {
+        producersTitle.setText("Producer " + idProducer + " GUI");
+    }
+    
+    public void setNewLocation(int idProducer) {
+        Dimension windowSize = getSize();
+        int dx = windowSize.width * idProducer + 100;    
+        setLocation(dx, 0);      
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel producersTitle;
     private javax.swing.JTextArea textAreaP;
     // End of variables declaration//GEN-END:variables
 }

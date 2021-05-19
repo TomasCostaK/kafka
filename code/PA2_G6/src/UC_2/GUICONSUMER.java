@@ -5,6 +5,9 @@
  */
 package UC_2;
 
+import java.awt.Dimension;
+
+
 /**
  *
  * @author alina
@@ -28,7 +31,7 @@ public class GUICONSUMER extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        consumersTitle = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         textAreaC = new javax.swing.JTextArea();
 
@@ -36,9 +39,9 @@ public class GUICONSUMER extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(247, 249, 250));
 
-        jLabel1.setFont(new java.awt.Font("Ubuntu Condensed", 3, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(171, 86, 181));
-        jLabel1.setText("Consumers GUI");
+        consumersTitle.setFont(new java.awt.Font("Ubuntu Condensed", 3, 24)); // NOI18N
+        consumersTitle.setForeground(new java.awt.Color(171, 86, 181));
+        consumersTitle.setText("Consumers GUI");
 
         textAreaC.setBackground(new java.awt.Color(241, 233, 240));
         textAreaC.setColumns(20);
@@ -52,9 +55,9 @@ public class GUICONSUMER extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(consumersTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -62,9 +65,9 @@ public class GUICONSUMER extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(consumersTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -72,7 +75,7 @@ public class GUICONSUMER extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 457, Short.MAX_VALUE)
+            .addGap(0, 333, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -81,7 +84,7 @@ public class GUICONSUMER extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 468, Short.MAX_VALUE)
+            .addGap(0, 435, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -118,6 +121,7 @@ public class GUICONSUMER extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(GUICONSUMER.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -127,13 +131,24 @@ public class GUICONSUMER extends javax.swing.JFrame {
         });
     }
     
+    public void updateTitleArea(String idConsumer) {
+        consumersTitle.setText("Consumer " + idConsumer + " GUI");
+    }
+    
     public void updateTextArea(String text) {
         textAreaC.append(text + "\n");
         textAreaC.setCaretPosition(textAreaC.getText().length());
     }
+    
+    public void setNewLocation(int idConsumer) {
+        Dimension windowSize = getSize();
+        int dx = windowSize.width * idConsumer + 100;    
+        setLocation(dx, 500);      
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel consumersTitle;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea textAreaC;

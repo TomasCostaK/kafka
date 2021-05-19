@@ -25,9 +25,10 @@ public class PPRODUCER extends Thread {
     private static final String topic = "Sensor";
     private KafkaProducer<String, Message> producer;
 
-    public PPRODUCER (int producerId, GUIPRODUCER guiProducer) {
+    public PPRODUCER (int producerId) {
         this.producerId = producerId;
-        this.guiProducer = guiProducer;
+        this.guiProducer = new GUIPRODUCER();
+        
         this.properties = new Properties();
         this.properties.put("bootstrap.servers", "localhost:9092"); // Conection to the kafka cluster
         this.properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer"); // Serializer class for key
@@ -43,6 +44,11 @@ public class PPRODUCER extends Thread {
     @Override
     public void run() {    
         try {
+            
+            this.guiProducer.setNewLocation(this.producerId);
+            this.guiProducer.setVisible(true);
+            this.guiProducer.updateTitleArea(Integer.toString(this.producerId));
+            
             InetAddress ip = InetAddress.getByName("localhost");
 
             while (true) {
@@ -66,10 +72,10 @@ public class PPRODUCER extends Thread {
                 
                 String[] msgArgs = received.split(" ");
                 Message msg = new Message(msgArgs[0], Double.parseDouble(msgArgs[1]), Integer.parseInt(msgArgs[2]));
-                guiProducer.updateTextArea("Producer " + this.producerId + " / Received from Source : " + msg.toString());
+                guiProducer.updateTextArea("Received from Source: " + msg.toString());
                  
                 producer.send(new ProducerRecord<>(this.topic, Integer.parseInt(msgArgs[0]),msgArgs[0], msg));  // send to kafka
-                guiProducer.updateTextArea("Producer " + this.producerId + " sent to server : " + msg.toString());
+                guiProducer.updateTextArea("Sent to Kafka: " + msg.toString());
                 
                 
                 if(received.equals("end")) {

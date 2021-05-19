@@ -10,11 +10,15 @@ import java.io.*;
  *
  * @author tomascosta
  */
-public class PSOURCE {
+public class PSOURCE extends Thread {
 
     private static final String filePath = System.getProperty("user.dir") + "/src/Data/sensor.txt";
     
-    public static void main(String[] args) throws IOException {
+    @Override
+    public void run() {
+        
+        boolean end = false;
+        
         try {
  
             FileInputStream fis = new FileInputStream(filePath);
@@ -43,10 +47,12 @@ public class PSOURCE {
                             else  {
                                 dos.writeUTF("end");      // if there are no more line, send a finish message to close connection
                                 s.close();
+                                end = true;
                                 break;
                             }
                         }
                     }
+                    if (end) break;
                 }
                 catch (Exception e){
                     try {
