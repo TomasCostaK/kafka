@@ -15,7 +15,7 @@ public class Main {
     public static void main(String args[]) throws InterruptedException {
     
         final int NUMBER_PRODUCERS = 1;
-        final int NUMBER_CONSUMERS = 5;
+        final int NUMBER_CONSUMERS = 6;
         
         final PSOURCE source = new PSOURCE();
         final PPRODUCER[] producers = new PPRODUCER[NUMBER_PRODUCERS];

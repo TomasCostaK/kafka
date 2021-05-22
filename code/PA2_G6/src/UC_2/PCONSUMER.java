@@ -38,6 +38,7 @@ public class PCONSUMER extends Thread {
         this.properties.put("auto.offset.reset", "latest");
         this.properties.put("max.poll.records", 10); 
         this.properties.put("group.id", "0");
+        this.properties.put("fetch.min.bytes","100000");
         this.properties.put("partition", String.valueOf(consumerId));
 
         this.consumer = new KafkaConsumer<>(properties);
