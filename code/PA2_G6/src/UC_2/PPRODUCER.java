@@ -75,7 +75,6 @@ public class PPRODUCER extends Thread {
                 
                 String[] msgArgs = received.split(" ");
                 Message msg = new Message(msgArgs[0], Double.parseDouble(msgArgs[1]), Integer.parseInt(msgArgs[2]));
-                guiProducer.updateTextArea("Received from Source: " + msg.toString());
                  
                 producer.send(new ProducerRecord<>(this.topic, Integer.parseInt(msgArgs[0]),msgArgs[0], msg));  // send to kafka
                 guiProducer.updateTextArea("Sent to Kafka: " + msg.toString());
