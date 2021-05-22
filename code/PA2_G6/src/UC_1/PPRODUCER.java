@@ -33,7 +33,10 @@ public class PPRODUCER extends Thread {
         this.properties.put("bootstrap.servers", "localhost:9092"); // Conection to the kafka cluster
         this.properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer"); // Serializer class for key
         this.properties.put("value.serializer", "Message.MessageSerializer"); // Serializer class for value (message)
-        this.properties.put("acks", "0"); // Acknowledgment received. 0: Will not wait, decords can be lost.
+        this.properties.put("acks", "1"); // Acknowledgment received. 0: Will not wait, decords can be lost.
+        this.properties.put("batch_size", "100000");
+        this.properties.put("linger.ms", "10");
+        this.properties.put("compression.type", "lz4");
         this.properties.put("max.in.flight.requests.per.connection", 1); // Maximum number of unacknowledged requests the client will send.
                                                                                      //  1: there is no risk of message reordering due to retries.
                                                                                      //  Will keep original order of all records.
@@ -60,7 +63,6 @@ public class PPRODUCER extends Thread {
                 dos.writeUTF("ready");   // sinalize server (source) that producer is ready to accept data
                   
                 String received = dis.readUTF();  // data received from source
-                System.out.println("Producer " + this.producerId + " / Received from Source: " + received);
                 
                 dis.close();
                 dos.close();
@@ -72,7 +74,6 @@ public class PPRODUCER extends Thread {
                 
                 String[] msgArgs = received.split(" ");
                 Message msg = new Message(msgArgs[0], Double.parseDouble(msgArgs[1]), Integer.parseInt(msgArgs[2]));
-                this.guiProducer.updateTextArea("Received from Source: " + msg.toString());
                  
                 this.producer.send(new ProducerRecord<>(this.topic, "DATA", msg));  // send to kafka
                 this.guiProducer.updateTextArea("Sent to Kafka: " + msg.toString());
