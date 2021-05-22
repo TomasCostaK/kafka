@@ -21,12 +21,15 @@ public class PCONSUMER extends Thread {
     private final int consumerId;
     private GUICONSUMER guiConsumer;
     private final Properties properties;
+    private double maxTemp, minTemp, currTemp;
     private static final String topic = "Sensor";
     private final KafkaConsumer<String, Message> consumer;
     
     public PCONSUMER(int consumerId) {
         this.consumerId = consumerId;
         this.guiConsumer = new GUICONSUMER();
+        this.maxTemp = -1;
+        this.minTemp = -1;
         
         this.properties = new Properties();
         this.properties.put("bootstrap.servers", "localhost:9092"); // Conection to the kafka cluster
@@ -37,6 +40,7 @@ public class PCONSUMER extends Thread {
         this.properties.put("session.timeout.ms", "30000");
         this.properties.put("auto.offset.reset", "latest");
         this.properties.put("max.poll.records", 10); 
+        this.properties.put("fetch.min.bytes","100000");
         this.properties.put("group.id", String.valueOf(consumerId));
 
         this.consumer = new KafkaConsumer<>(properties);
@@ -52,12 +56,19 @@ public class PCONSUMER extends Thread {
         
         while (true) {
             ConsumerRecords<String, Message> records = consumer.poll(Duration.ofMillis(100));
-
+            
             records.forEach(record -> {
                 Message msg = record.value();
-                guiConsumer.updateTextArea("Consumed from Kafka: " + msg.toString());
+                currTemp = Double.parseDouble(String.valueOf(msg).split(" ")[1]);
+                if(maxTemp == -1){
+                    maxTemp = currTemp;
+                    minTemp = currTemp;
+                }
+                if(maxTemp<currTemp){maxTemp=currTemp;}
+                if(minTemp>currTemp){minTemp=currTemp;}
+                
             });
-
+            guiConsumer.updateTextArea("groupID:" + String.valueOf(consumerId) +" ,max: " + this.maxTemp + ", min: " + this.minTemp);
             consumer.commitAsync(); 
         }
     }
