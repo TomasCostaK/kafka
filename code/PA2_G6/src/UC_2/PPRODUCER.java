@@ -9,6 +9,7 @@ import Message.Message;
 import java.net.Socket;
 import java.io.*;
 import java.net.InetAddress;
+import java.util.HashMap;
 import java.util.Properties;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -24,6 +25,7 @@ public class PPRODUCER extends Thread {
     private Properties properties;
     private static final String topic = "Sensor";
     private KafkaProducer<String, Message> producer;
+    private final HashMap<String, Integer> totalNumberRecords;
 
     public PPRODUCER (int producerId) {
         this.producerId = producerId;
@@ -33,15 +35,24 @@ public class PPRODUCER extends Thread {
         this.properties.put("bootstrap.servers", "localhost:9092"); // Conection to the kafka cluster
         this.properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer"); // Serializer class for key
         this.properties.put("value.serializer", "Message.MessageSerializer"); // Serializer class for value (message)
-        this.properties.put("acks", "1"); // Acknowledgment received. 0: Will not wait, decords can be lost.
+        this.properties.put("acks", "1"); //  Will not wait for acknowledgment from all, records can be lost.
         this.properties.put("batch_size", "100000");
         this.properties.put("linger.ms", "10");
         this.properties.put("compression.type", "lz4");
         this.properties.put("max.in.flight.requests.per.connection", 1); // Maximum number of unacknowledged requests the client will send.
-                                                                                     //  1: there is no risk of message reordering due to retries.
-                                                                                     //  Will keep original order of all records.
+                                                                                     //  There is no risk of message reordering due to retries.
+                                                                                     
 
         this.producer = new KafkaProducer<>(properties);
+        
+        this.totalNumberRecords = new HashMap<>();
+        this.totalNumberRecords.put("total", 0);
+        this.totalNumberRecords.put("0", 0);
+        this.totalNumberRecords.put("1", 0);
+        this.totalNumberRecords.put("2", 0);
+        this.totalNumberRecords.put("3", 0);
+        this.totalNumberRecords.put("4", 0);
+        this.totalNumberRecords.put("5", 0);
     }
     
     @Override
@@ -63,13 +74,20 @@ public class PPRODUCER extends Thread {
                 dos.writeUTF("ready");   // sinalize server (source) that producer is ready to accept data
                   
                 String received = dis.readUTF();  // data received from source
-                System.out.println("Producer " + this.producerId + " / Received from Source: " + received);
+                //System.out.println("Producer " + this.producerId + " / Received from Source: " + received);
                 
                 dis.close();
                 dos.close();
                 s.close();
                 
                 if(received.equals("end")) {
+                    guiProducer.updateNumberRecords("total", this.totalNumberRecords.get("total"));
+                    guiProducer.updateNumberRecords("0", this.totalNumberRecords.get("0"));
+                    guiProducer.updateNumberRecords("1", this.totalNumberRecords.get("1"));
+                    guiProducer.updateNumberRecords("2", this.totalNumberRecords.get("2"));
+                    guiProducer.updateNumberRecords("3", this.totalNumberRecords.get("3"));
+                    guiProducer.updateNumberRecords("4", this.totalNumberRecords.get("4"));
+                    guiProducer.updateNumberRecords("5", this.totalNumberRecords.get("5"));
                     break;
                 } 
                 
@@ -79,10 +97,9 @@ public class PPRODUCER extends Thread {
                 producer.send(new ProducerRecord<>(this.topic, Integer.parseInt(msgArgs[0]),msgArgs[0], msg));  // send to kafka
                 guiProducer.updateTextArea("Sent to Kafka: " + msg.toString());
                 
+                this.totalNumberRecords.put("total", this.totalNumberRecords.get("total")+1);
+                this.totalNumberRecords.put(msgArgs[0], this.totalNumberRecords.get(msgArgs[0])+1);
                 
-                if(received.equals("end")) {
-                    break;
-                } 
             }
             producer.close();
             

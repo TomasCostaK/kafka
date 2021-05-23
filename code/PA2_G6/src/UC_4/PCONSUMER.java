@@ -8,6 +8,7 @@ package UC_4;
 import Message.Message;
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Properties;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -24,6 +25,7 @@ public class PCONSUMER extends Thread {
     private double maxTemp, minTemp, currTemp;
     private static final String topic = "Sensor";
     private final KafkaConsumer<String, Message> consumer;
+    private final HashMap<String, Integer> totalNumberRecords;
     
     public PCONSUMER(int consumerId) {
         this.consumerId = consumerId;
@@ -45,6 +47,15 @@ public class PCONSUMER extends Thread {
 
         this.consumer = new KafkaConsumer<>(properties);
         this.consumer.subscribe(Arrays.asList(this.topic));
+        
+        this.totalNumberRecords = new HashMap<>();
+        this.totalNumberRecords.put("total", 0);
+        this.totalNumberRecords.put("0", 0);
+        this.totalNumberRecords.put("1", 0);
+        this.totalNumberRecords.put("2", 0);
+        this.totalNumberRecords.put("3", 0);
+        this.totalNumberRecords.put("4", 0);
+        this.totalNumberRecords.put("5", 0);
     }
     
     @Override
@@ -67,8 +78,19 @@ public class PCONSUMER extends Thread {
                 if(maxTemp<currTemp){maxTemp=currTemp;}
                 if(minTemp>currTemp){minTemp=currTemp;}
                 
+                guiConsumer.updateTextArea("groupID:" + String.valueOf(consumerId) +" ,max: " + this.maxTemp + ", min: " + this.minTemp);
+                this.totalNumberRecords.put("total", this.totalNumberRecords.get("total")+1);
+                this.totalNumberRecords.put(msg.getId(), this.totalNumberRecords.get(msg.getId())+1);
             });
-            guiConsumer.updateTextArea("groupID:" + String.valueOf(consumerId) +" ,max: " + this.maxTemp + ", min: " + this.minTemp);
+           
+            guiConsumer.updateNumberRecords("total", this.totalNumberRecords.get("total"));
+            guiConsumer.updateNumberRecords("0", this.totalNumberRecords.get("0"));
+            guiConsumer.updateNumberRecords("1", this.totalNumberRecords.get("1"));
+            guiConsumer.updateNumberRecords("2", this.totalNumberRecords.get("2"));
+            guiConsumer.updateNumberRecords("3", this.totalNumberRecords.get("3"));
+            guiConsumer.updateNumberRecords("4", this.totalNumberRecords.get("4"));
+            guiConsumer.updateNumberRecords("5", this.totalNumberRecords.get("5"));
+            
             consumer.commitAsync(); 
         }
     }

@@ -24,6 +24,8 @@ public class PCONSUMER extends Thread {
     private double currTemp, average;
     private static final String topic = "Sensor";
     private final KafkaConsumer<String, Message> consumer;
+    private final HashMap<String, Integer> totalNumberRecords;
+    private boolean end;
     
     public PCONSUMER(int consumerId) {
         this.consumerId = consumerId;
@@ -43,6 +45,17 @@ public class PCONSUMER extends Thread {
 
         this.consumer = new KafkaConsumer<>(properties);
         this.consumer.subscribe(Arrays.asList(this.topic));
+        
+        this.totalNumberRecords = new HashMap<>();
+        this.totalNumberRecords.put("total", 0);
+        this.totalNumberRecords.put("0", 0);
+        this.totalNumberRecords.put("1", 0);
+        this.totalNumberRecords.put("2", 0);
+        this.totalNumberRecords.put("3", 0);
+        this.totalNumberRecords.put("4", 0);
+        this.totalNumberRecords.put("5", 0);
+        
+        this.end=false;
     }
     
     @Override
@@ -57,19 +70,38 @@ public class PCONSUMER extends Thread {
             
             records.forEach(record -> {
                 Message msg = record.value();
-                currTemp = Double.parseDouble(String.valueOf(msg).split(" ")[1]);
-                temps.add(currTemp);
-                
+                if(!msg.getId().equals("end")) {
+                    currTemp = msg.getTemperature();
+                    temps.add(currTemp);
+                    this.totalNumberRecords.put("total", this.totalNumberRecords.get("total")+1);
+                    this.totalNumberRecords.put(msg.getId(), this.totalNumberRecords.get(msg.getId())+1);
+                }
+                else this.end=true;
+                           
             });
+            
+            
             average = 0;
-            for(Double d : temps){
-                average += d;
+            if(!this.temps.isEmpty()) {
+                temps.forEach(d -> {
+                    average += d;
+                });
+                average /= temps.size();
+
+                guiConsumer.updateTextArea("groupID:" + String.valueOf(consumerId) +", average: " + average);
             }
-            average /= temps.size();
-                   
-            guiConsumer.updateTextArea("groupID:" + String.valueOf(consumerId) +", average: " + average);
+
             consumer.commitAsync(); 
+            if(this.end) break;
         }
+        guiConsumer.updateNumberRecords("total", this.totalNumberRecords.get("total"));
+            guiConsumer.updateNumberRecords("0", this.totalNumberRecords.get("0"));
+            guiConsumer.updateNumberRecords("1", this.totalNumberRecords.get("1"));
+            guiConsumer.updateNumberRecords("2", this.totalNumberRecords.get("2"));
+            guiConsumer.updateNumberRecords("3", this.totalNumberRecords.get("3"));
+            guiConsumer.updateNumberRecords("4", this.totalNumberRecords.get("4"));
+            guiConsumer.updateNumberRecords("5", this.totalNumberRecords.get("5"));
+        
     }
 
     

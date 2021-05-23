@@ -7,7 +7,6 @@ package UC_2;
 
 import java.awt.Dimension;
 
-
 /**
  *
  * @author alina
@@ -34,6 +33,13 @@ public class GUICONSUMER extends javax.swing.JFrame {
         consumersTitle = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         textAreaC = new javax.swing.JTextArea();
+        total = new javax.swing.JLabel();
+        sensor0 = new javax.swing.JLabel();
+        sensor1 = new javax.swing.JLabel();
+        sensor2 = new javax.swing.JLabel();
+        sensor4 = new javax.swing.JLabel();
+        sensor3 = new javax.swing.JLabel();
+        sensor5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,6 +54,34 @@ public class GUICONSUMER extends javax.swing.JFrame {
         textAreaC.setRows(5);
         jScrollPane1.setViewportView(textAreaC);
 
+        total.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        total.setForeground(new java.awt.Color(22, 24, 31));
+        total.setText("Total:        ");
+
+        sensor0.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        sensor0.setForeground(new java.awt.Color(22, 24, 31));
+        sensor0.setText("Sensor 0:");
+
+        sensor1.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        sensor1.setForeground(new java.awt.Color(22, 24, 31));
+        sensor1.setText("Sensor 1:        ");
+
+        sensor2.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        sensor2.setForeground(new java.awt.Color(22, 24, 31));
+        sensor2.setText("Sensor 2:");
+
+        sensor4.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        sensor4.setForeground(new java.awt.Color(22, 24, 31));
+        sensor4.setText("Sensor 4:");
+
+        sensor3.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        sensor3.setForeground(new java.awt.Color(22, 24, 31));
+        sensor3.setText("Sensor 3:");
+
+        sensor5.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        sensor5.setForeground(new java.awt.Color(22, 24, 31));
+        sensor5.setText("Sensor 5:        ");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -55,11 +89,29 @@ public class GUICONSUMER extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(consumersTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(consumersTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(sensor2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(sensor1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(59, 59, 59)
+                                        .addComponent(sensor5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 42, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(sensor0, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(sensor4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(total, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(sensor3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -67,15 +119,29 @@ public class GUICONSUMER extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(consumersTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(total)
+                    .addComponent(sensor3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sensor0)
+                    .addComponent(sensor4))
+                .addGap(5, 5, 5)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sensor1)
+                    .addComponent(sensor5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(sensor2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 333, Short.MAX_VALUE)
+            .addGap(0, 369, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -84,7 +150,7 @@ public class GUICONSUMER extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 435, Short.MAX_VALUE)
+            .addGap(0, 445, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -146,11 +212,48 @@ public class GUICONSUMER extends javax.swing.JFrame {
         setLocation(dx, 500);      
     }
     
+    public void updateNumberRecords(String id, int number) {
+        if (null != id) switch (id) {
+            case "total":
+                total.setText("Total: "+number);
+                break;
+            case "0":
+                sensor0.setText("Sensor 0: "+number);
+                break;
+            case "1":
+                sensor1.setText("Sensor 1: "+number);
+                break;
+            case "2":
+                sensor2.setText("Sensor 2: "+number);
+                break;
+            case "3":
+                sensor3.setText("Sensor 3: "+number);
+                break;
+            case "4":
+                sensor4.setText("Sensor 4: "+number);
+                break;
+            case "5":
+                sensor5.setText("Sensor 5: "+number);
+                break;
+            default:
+                break;
+        }
+    }
+    
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel consumersTitle;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel sensor0;
+    private javax.swing.JLabel sensor1;
+    private javax.swing.JLabel sensor2;
+    private javax.swing.JLabel sensor3;
+    private javax.swing.JLabel sensor4;
+    private javax.swing.JLabel sensor5;
     private javax.swing.JTextArea textAreaC;
+    private javax.swing.JLabel total;
     // End of variables declaration//GEN-END:variables
 }

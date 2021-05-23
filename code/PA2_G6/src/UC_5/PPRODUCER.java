@@ -9,6 +9,7 @@ import Message.Message;
 import java.net.Socket;
 import java.io.*;
 import java.net.InetAddress;
+import java.util.HashMap;
 import java.util.Properties;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -24,6 +25,7 @@ public class PPRODUCER extends Thread {
     private Properties properties;
     private static final String topic = "Sensor";
     private KafkaProducer<String, Message> producer;
+    private final HashMap<String, Integer> totalNumberRecords;
 
     public PPRODUCER (int producerId) {
         this.producerId = producerId;
@@ -40,6 +42,15 @@ public class PPRODUCER extends Thread {
         this.properties.put("max.in.flight.requests.per.connection", 1);                                                                               //  1: there is no risk of message reordering due to retries.
                                                                                      //  Will keep original order of all records.
         this.producer = new KafkaProducer<>(properties);
+        
+        this.totalNumberRecords = new HashMap<>();
+        this.totalNumberRecords.put("total", 0);
+        this.totalNumberRecords.put("0", 0);
+        this.totalNumberRecords.put("1", 0);
+        this.totalNumberRecords.put("2", 0);
+        this.totalNumberRecords.put("3", 0);
+        this.totalNumberRecords.put("4", 0);
+        this.totalNumberRecords.put("5", 0);
     }
     
     @Override
@@ -68,6 +79,15 @@ public class PPRODUCER extends Thread {
                 s.close();
                 
                 if(received.equals("end")) {
+                    Message msg = new Message("end", 0.0, 0);
+                    producer.send(new ProducerRecord<>(this.topic, 0,"0", msg));
+                    guiProducer.updateNumberRecords("total", this.totalNumberRecords.get("total"));
+                    guiProducer.updateNumberRecords("0", this.totalNumberRecords.get("0"));
+                    guiProducer.updateNumberRecords("1", this.totalNumberRecords.get("1"));
+                    guiProducer.updateNumberRecords("2", this.totalNumberRecords.get("2"));
+                    guiProducer.updateNumberRecords("3", this.totalNumberRecords.get("3"));
+                    guiProducer.updateNumberRecords("4", this.totalNumberRecords.get("4"));
+                    guiProducer.updateNumberRecords("5", this.totalNumberRecords.get("5"));
                     break;
                 } 
                 
@@ -77,10 +97,8 @@ public class PPRODUCER extends Thread {
                 producer.send(new ProducerRecord<>(this.topic, 0,msgArgs[0], msg));  // send to kafka
                 guiProducer.updateTextArea("Sent to Kafka: " + msg.toString());
                 
-                
-                if(received.equals("end")) {
-                    break;
-                } 
+                this.totalNumberRecords.put("total", this.totalNumberRecords.get("total")+1);
+                this.totalNumberRecords.put(msgArgs[0], this.totalNumberRecords.get(msgArgs[0])+1);
             }
             producer.close();
             
