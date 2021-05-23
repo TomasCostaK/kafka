@@ -40,7 +40,7 @@ public class PCONSUMER extends Thread {
         this.properties.put("allow.auto.create.topics", false); // One copy of each message. Records wil not be duplicated.
         this.properties.put("enable.auto.commit", true);
         this.properties.put("session.timeout.ms", "30000");
-        this.properties.put("auto.offset.reset", "latest");
+        this.properties.put("auto.offset.reset", "earliest");
         this.properties.put("max.poll.records", 10); 
         this.properties.put("fetch.min.bytes","100000");
         this.properties.put("group.id", String.valueOf(consumerId));

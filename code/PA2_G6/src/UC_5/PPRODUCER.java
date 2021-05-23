@@ -39,8 +39,8 @@ public class PPRODUCER extends Thread {
         this.properties.put("batch_size", "100000");
         this.properties.put("linger.ms", "10");
         this.properties.put("compression.type", "lz4");
-        this.properties.put("max.in.flight.requests.per.connection", 1);                                                                               //  1: there is no risk of message reordering due to retries.
-                                                                                     //  Will keep original order of all records.
+        this.properties.put("max.in.flight.requests.per.connection", 1); //  Will keep original order of all records.                                                                               //  1: there is no risk of message reordering due to retries.
+                                                                                     
         this.producer = new KafkaProducer<>(properties);
         
         this.totalNumberRecords = new HashMap<>();
